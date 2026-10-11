@@ -1,0 +1,15 @@
+# Android build output
+android/.gradle/
+android/build/
+android/app/build/
+
+# Signing material: never commit these files
+*.jks
+*.keystore
+release-key.properties
+
+# Local exports and device data
+studywell-backup-*.json
+*.log
+.DS_Store
+Thumbs.db

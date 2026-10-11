@@ -1,0 +1,58 @@
+name: Build Android test APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          gradle-version: '8.9'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android build tools
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Run source checks
+        run: node scripts/check-project.mjs
+
+      - name: Copy offline web app into Android assets
+        run: |
+          mkdir -p android/app/src/main/assets/www
+          cp -R web/. android/app/src/main/assets/www/
+
+      - name: Build test APK
+        run: gradle --no-daemon assembleDebug
+        working-directory: android
+
+      - name: Upload APK for device testing
+        uses: actions/upload-artifact@v4
+        with:
+          name: StudyWell-debug-test-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 14

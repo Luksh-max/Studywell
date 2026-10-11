@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StudyWell</string>
+    <string name="notification_channel_name">Study reminders</string>
+    <string name="notification_channel_description">Local reminders for study tasks and focus sessions.</string>
+</resources>

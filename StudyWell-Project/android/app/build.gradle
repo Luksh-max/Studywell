@@ -1,0 +1,58 @@
+plugins {
+    id "com.android.application"
+}
+
+def releaseVersionName = project.findProperty("versionName") ?: "1.0.0"
+def releaseVersionCode = (project.findProperty("versionCode") ?: "1").toInteger()
+def signingKeyPath = System.getenv("ANDROID_KEYSTORE_PATH")
+def hasReleaseSigning = signingKeyPath &&
+    System.getenv("ANDROID_KEYSTORE_PASSWORD") &&
+    System.getenv("ANDROID_KEY_ALIAS") &&
+    System.getenv("ANDROID_KEY_PASSWORD")
+
+android {
+    namespace "com.lukshkumar.studywell"
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.lukshkumar.studywell"
+        minSdk 23
+        targetSdk 35
+        versionCode releaseVersionCode
+        versionName releaseVersionName
+    }
+
+    signingConfigs {
+        if (hasReleaseSigning) {
+            release {
+                storeFile file(signingKeyPath)
+                storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
+                keyAlias System.getenv("ANDROID_KEY_ALIAS")
+                keyPassword System.getenv("ANDROID_KEY_PASSWORD")
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+        release {
+            minifyEnabled false
+            if (hasReleaseSigning) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation "androidx.webkit:webkit:1.12.1"
+    implementation "androidx.core:core:1.15.0"
+}

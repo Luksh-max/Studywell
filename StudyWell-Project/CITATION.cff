@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you refer to StudyWell in a project or assessment, cite this repository and its release version."
+title: "StudyWell: Offline Student Planner and Focus Companion"
+authors:
+  - family-names: Kumar
+    given-names: Luksh
+version: 1.0.0
+date-released: 2026-10-11
+url: https://github.com/Lucky-tech123/studywell
+license: LicenseRef-StudyWell-Evaluation
