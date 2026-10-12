@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="StudyWell icon">
+  <rect width="512" height="512" rx="112" fill="#111722"/>
+  <rect x="34" y="34" width="444" height="444" rx="92" fill="#1B2434" stroke="#40516E" stroke-width="4"/>
+  <circle cx="256" cy="256" r="146" fill="none" stroke="#7F9BFF" stroke-width="18" opacity="0.24"/>
+  <path d="M333 178c-18-21-45-33-78-33-53 0-90 28-90 69 0 38 29 54 83 66 43 10 59 19 59 39 0 21-21 35-53 35-31 0-59-12-81-35" fill="none" stroke="#EAF0FF" stroke-width="29" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="365" cy="147" r="17" fill="#7F9BFF"/>
+</svg>

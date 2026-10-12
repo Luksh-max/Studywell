@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+  <meta content="#111318" name="theme-color"/>
+  <meta content="A private, offline-first study planner and focus companion." name="description"/>
+  <title>
+   StudyWell &mdash; Study with intention
+  </title>
+  <link href="./manifest.json" rel="manifest"/>
+  <link href="./icons/icon.svg" rel="icon" type="image/svg+xml"/>
+  <link href="./css/styles.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <div aria-live="polite" class="lock-screen hidden" id="app-lock">
+   <div class="lock-card">
+    <div class="brand-mark">
+     SW
+    </div>
+    <p class="eyebrow">
+     PRIVATE STUDY SPACE
+    </p>
+    <h1>
+     Welcome back
+    </h1>
+    <p class="muted">
+     Enter your PIN to continue.
+    </p>
+    <form class="form-stack" id="unlock-form">
+     <label class="field-label" for="unlock-pin">
+      4-digit PIN
+     </label>
+     <input autocomplete="current-password" class="input pin-input" id="unlock-pin" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" required="" type="password"/>
+     <p class="form-message" id="unlock-error" role="status">
+     </p>
+     <button class="button primary full" type="submit">
+      Unlock StudyWell
+     </button>
+    </form>
+   </div>
+  </div>
+  <div aria-atomic="true" aria-live="polite" class="toast-region" id="toast-region">
+  </div>
+  <div class="app-shell" id="app-shell">
+   <aside aria-label="Main navigation" class="sidebar">
+    <a aria-label="StudyWell home" class="brand" href="#home">
+     <span class="brand-mark">
+      SW
+     </span>
+     <span>
+      <strong>
+       StudyWell
+      </strong>
+      <small>
+       Study with intention
+      </small>
+     </span>
+    </a>
+    <nav class="side-nav" id="side-nav">
+     <button class="nav-item active" data-page="home">
+      <span class="nav-icon">
+       <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="m3 10 9-7 9 7">
+        </path>
+        <path d="M5 9v12h14V9">
+        </path>
+        <path d="M9 21v-7h6v7">
+        </path>
+       </svg>
+      </span>
+      <span>
+       Overview
+      </span>
+     </button>
+     <button class="nav-item" data-page="mission">
+      <span class="nav-icon">
+       <svg aria-hidden="true" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="8">
+        </circle>
+        <circle cx="12" cy="12" r="3">
+        </circle>
+        <path d="M12 2v2M22 12h-2">
+        </path>
+       </svg>
+      </span>
+      <span>
+       Daily mission
+      </span>
+     </button>
+     <button class="nav-item" data-page="exams">
+      <span class="nav-icon">
+       <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M3 5.5A2.5 2.5 0 0 1 5.5 3H12v17H5.5A2.5 2.5 0 0 0 3 22z">
+        </path>
+        <path d="M21 5.5A2.5 2.5 0 0 0 18.5 3H12v17h6.5A2.5 2.5 0 0 1 21 22z">
+        </path>
+       </svg>
+      </span>
+      <span>
+       Exam map
+      </span>
+     </button>
+     <button class="nav-item" data-page="planner">
+      <span class="nav-icon">
+       <svg aria-hidden="true" viewBox="0 0 24 24">
+        <rect height="16" rx="2" width="18" x="3" y="5">
+        </rect>
+        <path d="M16 3v4M8 3v4M3 10h18">
+        </path>
+       </svg>
+      </span>
+      <span>
+       Planner
+      </span>
+     </button>
+     <button class="nav-item" data-page="focus">
+      <span class="nav-icon">
+       <svg aria-hidden="true" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9">
+        </circle>
+        <path d="M12 7v5l3 2">
+        </path>
+       </svg>
+      </span>
+      <span>
+       Focus timer
+      </span>
+     </button>
+     <button class="nav-item" data-page="cards">
+      <span class="nav-icon">
+       <svg aria-hidden="true" viewBox="0 0 24 24">
+        <rect height="17" rx="2" width="14" x="5" y="4">
+        </rect>
+        <path d="M8 8h8M8 12h8M8 16h5">
+        </path>
+        <path d="M3 7v14">
+        </path>
+       </svg>
+      </span>
+      <span>
+       Flashcards
+      </span>
+     </button>
+     <button class="nav-item" data-page="mood">
+      <span class="nav-icon">
+       <svg aria-hidden="true" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9">
+        </circle>
+        <path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01">
+        </path>
+       </svg>
+      </span>
+      <span>
+       Mood check-in
+      </span>
+     </button>
+     <button class="nav-item" data-page="journal">
+      <span class="nav-icon">
+       <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M5 3h14v18H5z">
+        </path>
+        <path d="M8 8h8M8 12h8M8 16h6">
+        </path>
+       </svg>
+      </span>
+      <span>
+       Journal
+      </span>
+     </button>
+     <button class="nav-item" data-page="breathing">
+      <span class="nav-icon">
+       <svg aria-hidden="true" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9">
+        </circle>
+        <path d="M5 12c2-3 4-3 7 0s5 3 7 0">
+        </path>
+       </svg>
+      </span>
+      <span>
+       Breathing
+      </span>
+     </button>
+     <button class="nav-item" data-page="insights">
+      <span class="nav-icon">
+       <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M4 20V10M10 20V4M16 20v-7M22 20H2">
+        </path>
+       </svg>
+      </span>
+      <span>
+       Insights
+      </span>
+     </button>
+    </nav>
+    <div class="sidebar-bottom">
+     <div class="offline-indicator">
+      <span class="status-dot">
+      </span>
+      <span>
+       Designed for offline use
+      </span>
+     </div>
+     <button class="nav-item settings-link" data-page="settings">
+      <span aria-hidden="true" class="nav-icon">
+       <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 7h9M17 7h3M4 17h3M11 17h9"></path>
+        <circle cx="15" cy="7" r="2"></circle>
+        <circle cx="9" cy="17" r="2"></circle>
+       </svg>
+      </span>
+      <span>
+       Settings &amp; privacy
+      </span>
+     </button>
+    </div>
+   </aside>
+   <main class="main-area">
+    <header class="topbar">
+     <div class="topbar-title">
+      <p class="eyebrow" id="today-label">
+       YOUR STUDY SPACE
+      </p>
+      <h1 id="page-heading">
+       Overview
+      </h1>
+     </div>
+     <div class="topbar-actions">
+      <span class="save-status" id="save-status">
+       Saved on this device
+      </span>
+      <button class="button secondary install-button hidden" id="install-button" type="button">
+       Install app
+      </button>
+      <button class="button primary" id="quick-add" type="button">
+       + Add task
+      </button>
+     </div>
+    </header>
+    <section aria-live="polite" class="page-content" id="page-content" tabindex="-1">
+     <section class="card boot-card">
+      <p class="eyebrow">
+       STUDY WELL, AT YOUR PACE
+      </p>
+      <h2>
+       Preparing your study space
+      </h2>
+      <p class="muted">
+       Loading your local planner and saved progress.
+      </p>
+      <div aria-hidden="true" class="progress-track">
+       <div class="progress-fill" style="width: 65%">
+       </div>
+      </div>
+     </section>
+    </section>
+    <footer class="app-footer">
+     <span>
+      StudyWell
+     </span>
+     <span>
+      Private by design &middot; Your data stays on this device
+     </span>
+    </footer>
+   </main>
+  </div>
+  <nav aria-label="Mobile navigation" class="mobile-nav" id="mobile-nav">
+   <button class="mobile-nav-item active" data-page="home">
+    <span>
+     <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path d="m3 10 9-7 9 7">
+      </path>
+      <path d="M5 9v12h14V9">
+      </path>
+      <path d="M9 21v-7h6v7">
+      </path>
+     </svg>
+    </span>
+    <small>
+     Home
+    </small>
+   </button>
+   <button class="mobile-nav-item" data-page="planner">
+    <span>
+     <svg aria-hidden="true" viewBox="0 0 24 24">
+      <rect height="16" rx="2" width="18" x="3" y="5">
+      </rect>
+      <path d="M16 3v4M8 3v4M3 10h18">
+      </path>
+     </svg>
+    </span>
+    <small>
+     Plan
+    </small>
+   </button>
+   <button class="mobile-nav-item" data-page="focus">
+    <span>
+     <svg aria-hidden="true" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9">
+      </circle>
+      <path d="M12 7v5l3 2">
+      </path>
+     </svg>
+    </span>
+    <small>
+     Focus
+    </small>
+   </button>
+   <button class="mobile-nav-item" data-page="cards">
+    <span>
+     <svg aria-hidden="true" viewBox="0 0 24 24">
+      <rect height="17" rx="2" width="14" x="5" y="4">
+      </rect>
+      <path d="M8 8h8M8 12h8M8 16h5">
+      </path>
+      <path d="M3 7v14">
+      </path>
+     </svg>
+    </span>
+    <small>
+     Cards
+    </small>
+   </button>
+   <button class="mobile-nav-item" data-page="settings">
+    <span aria-hidden="true">
+     <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path d="M4 7h9M17 7h3M4 17h3M11 17h9">
+      </path>
+      <circle cx="15" cy="7" r="2">
+      </circle>
+      <circle cx="9" cy="17" r="2">
+      </circle>
+     </svg>
+    </span>
+    <small>
+     Settings
+    </small>
+   </button>
+  </nav>
+  <dialog class="app-dialog" id="app-dialog">
+   <div class="dialog-content" id="dialog-content">
+   </div>
+  </dialog>
+  <script src="./js/storage.js">
+  </script>
+  <script src="./js/app.js">
+  </script>
+ </body>
+</html>

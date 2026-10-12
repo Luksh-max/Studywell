@@ -128,11 +128,21 @@
         return result;
     };
     function toast(message, kind = "success") {
+        const region = $("#toast-region");
+        if (!region) {
+            console.error("StudyWell notification:", message);
+            return;
+        }
         const node = document.createElement("div");
         node.className = `toast ${kind}`;
         node.textContent = message;
-        $("#toast-region").append(node);
+        region.append(node);
         window.setTimeout(() => node.remove(), 3400);
+    }
+    function reportRuntimeError(error, context = "StudyWell action") {
+        console.error(`${context} failed:`, error);
+        const message = error && error.message ? error.message : "Please try again.";
+        toast(`Something went wrong. ${message}`, "error");
     }
     function applyTheme(name = (localStorage.getItem("studywell_theme") || "Midnight")) {
         if (!THEMES.includes(name))
@@ -147,7 +157,7 @@
             page = "home";
         state.page = page;
         history.replaceState(null, "", `#${page}`);
-        render();
+        render().catch((error) => reportRuntimeError(error, "Page render"));
     }
     function iconButton(action, label, icon = "close", id = "") {
         const icons = {
@@ -2076,14 +2086,15 @@ ${iconButton("close-dialog", "Close dialog", "close")}
                 finishOnboarding(actionButton.dataset.choice);
                 return;
             }
-            handleAction(actionButton);
+            handleAction(actionButton).catch((error) => reportRuntimeError(error, `Action: ${actionButton.dataset.action || "unknown"}`));
         }
     });
     document.addEventListener("submit", (event) => {
-        if (event.target.id === "unlock-form")
-            unlockSubmit(event);
-        else
-            handleSubmit(event);
+        if (event.target.id === "unlock-form") {
+            unlockSubmit(event).catch((error) => reportRuntimeError(error, "Unlock"));
+        } else {
+            handleSubmit(event).catch((error) => reportRuntimeError(error, "Form submit"));
+        }
     });
     document.addEventListener("keydown", (event) => {
         const card = event.target.closest("[data-action='flip-card'][role='button']");
@@ -2142,6 +2153,13 @@ ${iconButton("close-dialog", "Close dialog", "close")}
         if (state.timer?.running)
             ensureTimerTick();
     });
+    window.addEventListener("unhandledrejection", (event) => {
+        reportRuntimeError(event.reason, "Background task");
+    });
+    window.addEventListener("error", (event) => {
+        reportRuntimeError(event.error || event.message, "JavaScript runtime");
+    });
+
     init().catch((error) => {
         console.error("StudyWell failed to start:", error);
         const content = $("#page-content");

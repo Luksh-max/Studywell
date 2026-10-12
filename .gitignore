@@ -13,3 +13,4 @@ studywell-backup-*.json
 *.log
 .DS_Store
 Thumbs.db
+*.jks.base64

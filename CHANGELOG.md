@@ -10,3 +10,11 @@
 - Added source-available usage terms, a detailed README, and a device QA checklist.
 
 This changelog records the intended release contents. Complete the device QA checklist before describing all device behaviors as verified.
+
+## 1.0.1 — Freeze and cache resilience patch
+
+- Bumped the PWA cache version so existing installations replace stale cached app assets on update.
+- Changed same-origin asset caching to network-first with a cached offline fallback, keeping offline launch support while allowing deployed fixes to reach users.
+- Added visible error reporting for failed delegated actions, form submissions, page renders, and background JavaScript errors so a failed operation is not silently mistaken for an unresponsive interface.
+- Synced the updated web files into the Android WebView asset bundle.
+- Static project checks and JavaScript syntax checks pass. Full real-device freeze reproduction still needs to be checked on the hosted website and Android device.

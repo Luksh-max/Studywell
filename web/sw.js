@@ -1,5 +1,5 @@
 /* StudyWell service worker. Every runtime asset is stored in this repository. */
-const CACHE_NAME = "studywell-static-v3";
+const CACHE_NAME = "studywell-static-v4";
 const APP_FILES = [
     "./",
     "./index.html",
@@ -39,19 +39,20 @@ self.addEventListener("fetch", (event) => {
             .catch(async () => (await caches.match("./index.html")) || Response.error()));
         return;
     }
-    event.respondWith(caches.match(event.request).then((cachedResponse) => {
+    event.respondWith(fetch(event.request).then((response) => {
+        if (response.ok && response.type === "basic") {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        }
+        return response;
+    }).catch(async () => {
+        const cachedResponse = await caches.match(event.request);
         if (cachedResponse)
             return cachedResponse;
-        return fetch(event.request).then((response) => {
-            if (response.ok && response.type === "basic") {
-                const copy = response.clone();
-                caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-            }
-            return response;
-        }).catch(() => new Response("This resource is not available offline.", {
+        return new Response("This resource is not available offline.", {
             status: 503,
             headers: { "Content-Type": "text/plain; charset=utf-8" }
-        }));
+        });
     }));
 });
 self.addEventListener("notificationclick", (event) => {

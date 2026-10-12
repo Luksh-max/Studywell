@@ -15,3 +15,8 @@ StudyWell is an offline-first study planner and focus companion. The Android rel
 - Android notifications require the user's permission.
 - Alarm delivery can be delayed by Android battery management.
 - The PIN is an access barrier, not full encryption of all stored records.
+
+### Reliability patch
+- Updated service-worker cache version to refresh previously cached scripts and styles after deployment.
+- Updated cache strategy to use fresh same-origin assets when online and the last cached copy when offline.
+- Added visible runtime error feedback when an action or render fails.
